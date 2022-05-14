@@ -1,0 +1,28 @@
+Data D;                                                                                                                                 
+  Retain seed 9982;  * -- last 4 digits of my ph.#;                                                                                     
+  Mu1=100; Sd1=20;                                                                                                                      
+  N1=30;                                                                                                                              
+  Mu2=105; Sd2=90;                                                                                                                      
+  N2=3;                                                                                                                              
+  * -- Generate data for group 1;                                                                                                       
+  Group=1;                                                                                                                              
+  * -- following block will be executed N1 times;                                                                                       
+  Do i = 1 to N1;                                                                                                                       
+    *--generate random Y with mean mu1 and std dev sd1;                                                                                 
+    Y = mu1 + rannor(seed)*sd1;                                                                                                         
+    Output;  * -- forces SAS to output new record;                                                                                      
+  End;                                                                                                                                  
+  * -- Generate data for group 2;                                                                                                       
+  Group=2;                                                                                                                              
+  * -- following block will be executed N2 times;                                                                                       
+  Do i=1 to N2;                                                                                                                         
+    *--generate random Y with mean mu2 and std dev sd2;                                                                                 
+    Y = mu2 + rannor(seed)*sd2;                                                                                                         
+    Output;                                                                                                                             
+  End;  
+Run;                                                                                                                                                                                                                                                                  
+
+proc ttest data=D;
+	class Group;
+	var Y;
+run;
